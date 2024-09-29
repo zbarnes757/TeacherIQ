@@ -3,9 +3,11 @@
 namespace App\Actions\Fortify;
 
 use App\Enums\UserAccountType;
+use App\Models\TeacherProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Validation\Rule;
@@ -29,11 +31,23 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'account_type' => $input['account_type'],
         ]);
+
+        switch ($user->account_type) {
+            case UserAccountType::Teacher:
+                Log::info('Creating Teacher profile for ' . $user->id);
+                $profile = new TeacherProfile();
+                $profile->user_id = $user->id;
+                $profile->saveOrFail();
+            default:
+                Log::warning('No profile to be created for ' . $user->id);
+        }
+
+        return $user;
     }
 }

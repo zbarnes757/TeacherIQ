@@ -65,4 +65,9 @@ class User extends Authenticatable
             'account_type' => UserAccountType::class,
         ];
     }
+
+    public function isTeacher(): bool
+    {
+        return $this->account_type === UserAccountType::Teacher->value;
+    }
 }
