@@ -18,9 +18,16 @@ class TeacherProfile extends Model
     ];
 
     protected $fillable = [
-        'bio'
+        'bio',
+        'can_be_remote'
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'can_be_remote' => 'boolean',
+        ];
+    }
 
 
     public function user(): BelongsTo

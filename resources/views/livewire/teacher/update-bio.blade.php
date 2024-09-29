@@ -5,16 +5,19 @@ use App\Models\Grade;
 use App\Models\Subject;
 use function Livewire\Volt\{state, form};
 
-state('profile', TeacherProfile::where('user_id', auth()->user()->id)->first(););
+$profile = TeacherProfile::where('user_id', auth()->id())->firstOrFail();
+state('profile', $profile);
 state('all_grades', Grade::all());
 state('all_subjects', Subject::all());
 state('bio', $profile->bio ?? null);
+state('can_be_remote', $profile->can_be_remote ?? false);
 state('selected_grades', $profile->grades->pluck('id') ?? []);
 state('selected_subjects', $profile->subjects->pluck('id') ?? []);
 
 $updateBio = function () {
     $this->profile->update([
         'bio' => $this->bio,
+        'can_be_remote' => $this->can_be_remote,
     ]);
 
     $this->profile->grades()->sync($this->selected_grades);
@@ -59,6 +62,14 @@ $updateBio = function () {
                 @endforeach
             </x-select>
             <x-input-error for="subjects" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <label for="can_be_remote" class="flex items-center">
+                <x-checkbox id="can_be_remote" name="can_be_remote" wire:model="can_be_remote" />
+                <span class="text-sm text-gray-600 ms-2">{{ __('Can be remote?') }}</span>
+            </label>
+        </div>
     </x-slot>
 
     <x-slot name="actions">
