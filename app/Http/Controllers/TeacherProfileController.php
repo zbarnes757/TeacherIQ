@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\TeacherProfile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class TeacherProfileController extends Controller
