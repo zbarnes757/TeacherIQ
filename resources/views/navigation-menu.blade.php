@@ -12,10 +12,19 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+
+
+                @if (auth()->user()->isTeacher())
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('teachers.home') }}" :active="request()->routeIs('teachers.home')" wire:navigate>
+                            {{ __('My Teacher Profile') }}
+                        </x-nav-link>
+                    </div>
+                @endif
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -153,6 +162,12 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if (Auth::user()->isTeacher())
+                <x-responsive-nav-link href="{{ route('teachers.home') }}" :active="request()->routeIs('teachers.home')">
+                    {{ __('My Teacher Profile') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
