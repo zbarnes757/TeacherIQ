@@ -43,7 +43,8 @@ class CreateNewUser implements CreatesNewUsers
                 Log::info('Creating Teacher profile for ' . $user->id);
                 $profile = new TeacherProfile();
                 $profile->user_id = $user->id;
-                $profile->saveOrFail();
+                $profile->save();
+                break;
             default:
                 Log::warning('No profile to be created for ' . $user->id);
         }
