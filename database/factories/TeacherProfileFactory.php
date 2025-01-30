@@ -17,7 +17,7 @@ class TeacherProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            
         ];
     }
 }

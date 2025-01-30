@@ -33,7 +33,7 @@ class FortifyServiceProvider extends ServiceProvider
                         return redirect('/teachers/home');
 
                     case UserAccountType::Parent:
-                        # code...
+                        // code...
                         return redirect('/parent');
 
                     default:
@@ -52,7 +52,7 @@ class FortifyServiceProvider extends ServiceProvider
                         return redirect('/teachers/home');
 
                     case UserAccountType::Parent:
-                        # code...
+                        // code...
                         return redirect('/parent');
 
                     default:

@@ -1,0 +1,15 @@
+[source]
+paths = [
+    "app",
+    "tests",
+    "bootstrap",
+    "config",
+    "database",
+    "public",
+    "resources",
+    "routes",
+]
+includes = ["vendor"]
+
+[linter]
+plugins = ["laravel"]

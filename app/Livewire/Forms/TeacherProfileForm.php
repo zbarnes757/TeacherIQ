@@ -5,7 +5,7 @@ namespace App\Livewire\Forms;
 use App\Models\TeacherProfile;
 use Livewire\Form;
 
-class TeacherProfileForm extends Form
+final class TeacherProfileForm extends Form
 {
     public ?TeacherProfile $profile;
 
@@ -17,6 +17,8 @@ class TeacherProfileForm extends Form
 
     public $subjects = [];
 
+    public $towns = [];
+
     public function setProfile(TeacherProfile $profile): void
     {
         $this->profile = $profile;
@@ -24,6 +26,7 @@ class TeacherProfileForm extends Form
         $this->can_be_remote = $profile->can_be_remote;
         $this->grades = $profile->grades->pluck('id')->toArray();
         $this->subjects = $profile->subjects->pluck('id')->toArray();
+        $this->towns = $profile->towns->pluck('id')->toArray();
     }
 
     public function store(): void
@@ -32,5 +35,6 @@ class TeacherProfileForm extends Form
 
         $this->profile->grades()->sync($this->grades);
         $this->profile->subjects()->sync($this->subjects);
+        $this->profile->towns()->sync($this->towns);
     }
 }

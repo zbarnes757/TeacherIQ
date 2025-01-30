@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'libsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -30,6 +30,11 @@ return [
     */
 
     'connections' => [
+        "libsql" => [
+            "driver" => env("DB_CONNECTION", "libsql"),
+            "database" => database_path("dev.db"),
+        ],
+
 
         'sqlite' => [
             'driver' => 'sqlite',

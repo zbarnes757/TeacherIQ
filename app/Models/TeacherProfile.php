@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class TeacherProfile extends Model
+final class TeacherProfile extends Model
 {
     use HasFactory;
 
@@ -37,11 +37,14 @@ class TeacherProfile extends Model
         return $this->belongsToMany(Subject::class);
     }
 
+    public function towns(): BelongsToMany {
+      return $this->belongsToMany(Town::class);
+    }
+
     protected function casts(): array
     {
         return [
             'can_be_remote' => 'boolean',
-
         ];
     }
 }
