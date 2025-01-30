@@ -27,38 +27,22 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
-                switch (Auth::user()?->account_type) {
-                    case UserAccountType::Teacher:
-
-                        return redirect('/teachers/home');
-
-                    case UserAccountType::Parent:
-                        // code...
-                        return redirect('/parent');
-
-                    default:
-                        // Raise an error since the user is missing a type
-                        return redirect('/');
-                }
+                return match (Auth::user()?->account_type) {
+                    UserAccountType::Teacher => redirect('/teachers/home'),
+                    UserAccountType::Parent => redirect('/parent'),
+                    default => redirect('/'),
+                };
             }
         });
 
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
             public function toResponse($request)
             {
-                switch (Auth::user()?->account_type) {
-                    case UserAccountType::Teacher:
-
-                        return redirect('/teachers/home');
-
-                    case UserAccountType::Parent:
-                        // code...
-                        return redirect('/parent');
-
-                    default:
-                        // Raise an error since the user is missing a type
-                        return redirect('/');
-                }
+                return match (Auth::user()?->account_type) {
+                    UserAccountType::Teacher => redirect('/teachers/home'),
+                    UserAccountType::Parent => redirect('/parent'),
+                    default => redirect('/'),
+                };
             }
         });
     }
@@ -79,8 +63,6 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($throttleKey);
         });
 
-        RateLimiter::for('two-factor', function (Request $request) {
-            return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        });
+        RateLimiter::for('two-factor', fn(Request $request) => Limit::perMinute(5)->by($request->session()->get('login.id')));
     }
 }

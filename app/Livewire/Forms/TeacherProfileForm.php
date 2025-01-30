@@ -7,7 +7,7 @@ use Livewire\Form;
 
 final class TeacherProfileForm extends Form
 {
-    public ?TeacherProfile $profile;
+    public ?TeacherProfile $profile = null;
 
     public $bio = '';
 

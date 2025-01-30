@@ -8,12 +8,12 @@ use function Livewire\Volt\{mount, state, form};
 
 form(TeacherProfileForm::class);
 
-mount(function () {
+mount(function (): void {
     $profile = TeacherProfile::where('user_id', auth()->id())->firstOrFail();
     $this->form->setProfile($profile);
 });
 
-$updateBio = function () {
+$updateBio = function (): void {
     $this->form->store();
 
     session()->now('flash.banner', 'Your profile has been updated!');
